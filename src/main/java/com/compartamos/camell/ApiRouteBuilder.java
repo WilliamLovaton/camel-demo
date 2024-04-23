@@ -2,28 +2,21 @@ package com.compartamos.camell;
 
 import java.text.SimpleDateFormat;
 
-import javax.ws.rs.core.MediaType;
+import io.quarkus.runtime.annotations.ConfigItem;
+import jakarta.ws.rs.core.MediaType;
 
+import jakarta.enterprise.context.ApplicationScoped;
 import org.apache.camel.Exchange;
 import org.apache.camel.builder.RouteBuilder;
-import org.apache.camel.component.http4.HttpComponent;
 
 import com.fasterxml.jackson.databind.ObjectMapper;
 
+@ApplicationScoped
 public class ApiRouteBuilder extends RouteBuilder {
-	
-    private String restEndpoint;
-    private Integer timeoutDefault = 30000;
 
     @Override
     public void configure() {
-    	
-    	configureTimeout();
-        
-        from(restEndpoint).routeId("routeMain")
-           .toD("direct:${header.operationName}")
-	    .end();
-        
+
         from("direct:get").routeId("routeGet")
             .process(exchange -> {
                 Language result = new Language();
@@ -82,22 +75,6 @@ public class ApiRouteBuilder extends RouteBuilder {
         .end(); 
 
     }
-
-    public void setRestEndpoint(String restEndpoint) {
-        this.restEndpoint = restEndpoint;
-    }
-    
-    public void configureTimeout() {
-
-		HttpComponent httpsComponent = getContext().getComponent("https4", HttpComponent.class);
-		HttpComponent httpComponent = getContext().getComponent("http4", HttpComponent.class);
-		httpsComponent.setConnectionTimeToLive(timeoutDefault);
-		httpsComponent.setSocketTimeout(timeoutDefault);
-		httpsComponent.setConnectTimeout(timeoutDefault);
-		httpComponent.setConnectionTimeToLive(timeoutDefault);
-		httpComponent.setSocketTimeout(timeoutDefault);
-		httpComponent.setConnectTimeout(timeoutDefault);
-	}
 
     public String entityToJson(Object value) throws Exception {
 
