@@ -1,0 +1,310 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<project xmlns="http://maven.apache.org/POM/4.0.0" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+         xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/maven-v4_0_0.xsd">
+
+    <modelVersion>4.0.0</modelVersion>
+
+    <groupId>com.compartamos</groupId>
+    <artifactId>apiController</artifactId>
+    <packaging>bundle</packaging>
+    <version>1</version>
+
+    <name>Api TEST CONTROLLER</name>
+	<licenses>
+		<license>
+			<name>Apache License, Version 2.0</name>
+			<url>https://www.apache.org/licenses/LICENSE-2.0.html</url>
+			<distribution>repo</distribution>
+		</license>
+	</licenses>
+	<properties>
+        <skipTests>true</skipTests>
+        <jboss.fuse.bom.version>7.8.0.fuse-sb2-780038-redhat-00001</jboss.fuse.bom.version>
+	    <version.maven-bundle-plugin>3.2.0</version.maven-bundle-plugin>	    
+	    <project.reporting.outputEncoding>UTF-8</project.reporting.outputEncoding>
+	    <build-helper-maven-plugin-version>3.0.0</build-helper-maven-plugin-version>
+	    <project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>
+	    <version.maven-surefire-plugin>2.22.0</version.maven-surefire-plugin>
+        <maven.compiler.target>1.8</maven.compiler.target>
+	    <maven.compiler.source>1.8</maven.compiler.source>
+	</properties>
+	<dependencyManagement>
+		<dependencies>
+			<dependency>
+				<groupId>org.jboss.redhat-fuse</groupId>
+				<artifactId>fuse-karaf-bom</artifactId>
+				<version>${jboss.fuse.bom.version}</version>
+				<type>pom</type>
+				<scope>import</scope>
+			</dependency>
+		</dependencies>
+	</dependencyManagement>
+
+    <dependencies> 
+        <dependency>
+		    <groupId>org.ow2.asm</groupId>
+		    <artifactId>asm-commons</artifactId>
+		    <scope>runtime</scope>
+		</dependency> 
+		<dependency>
+		    <groupId>org.osgi</groupId>
+		    <artifactId>org.osgi.core</artifactId>
+		    <scope>runtime</scope>
+		</dependency>
+		<dependency>
+		    <groupId>org.osgi</groupId>
+		    <artifactId>org.osgi.compendium</artifactId>
+		    <scope>runtime</scope>
+		</dependency>   
+		<!-- https://mvnrepository.com/artifact/redis.clients/jedis -->		
+		<dependency>
+		    <groupId>redis.clients</groupId>
+		    <artifactId>jedis</artifactId>
+		    <version>3.3.0</version>
+		</dependency>
+		
+		<dependency>
+		    <groupId>org.apache.commons</groupId>
+		    <artifactId>commons-pool2</artifactId>		   
+		</dependency>
+		
+		<!-- https://mvnrepository.com/artifact/org.jasypt/jasypt -->
+		<dependency>
+		    <groupId>org.jasypt</groupId>
+		    <artifactId>jasypt</artifactId>	
+		    <version>1.9.3</version>
+		    <classifier>lite</classifier>
+            <scope>compile</scope>   
+		</dependency>
+		<dependency>
+		    <groupId>org.apache.camel</groupId>
+		    <artifactId>camel-jasypt</artifactId>	
+		</dependency>
+		<dependency>
+			<groupId>io.jsonwebtoken</groupId>
+			<artifactId>jjwt</artifactId>
+			<version>0.9.1</version>
+		</dependency>
+		
+        <dependency>
+            <groupId>org.ow2.asm</groupId>
+            <artifactId>asm-all</artifactId>
+            <version>4.1</version>
+            <scope>test</scope>
+        </dependency>
+        <dependency>
+            <groupId>org.apache.camel</groupId>
+            <artifactId>camel-core</artifactId>            
+        </dependency>
+        <dependency>
+		    <groupId>org.apache.camel</groupId>
+		    <artifactId>camel-redis</artifactId>
+		    <version>3.5.0</version>
+		</dependency>
+        <dependency>
+            <groupId>org.apache.camel</groupId>
+            <artifactId>camel-blueprint</artifactId>
+            
+        </dependency>
+        <dependency>
+            <groupId>org.apache.camel</groupId>
+            <artifactId>camel-cxf</artifactId>          
+        </dependency>
+        <dependency>
+            <groupId>org.apache.camel</groupId>
+            <artifactId>camel-jackson</artifactId>          
+        </dependency>
+        <dependency>
+            <groupId>org.apache.camel</groupId>
+            <artifactId>camel-http4</artifactId>          
+        </dependency>
+
+        <dependency>
+            <groupId>javax.ws.rs</groupId>
+            <artifactId>javax.ws.rs-api</artifactId>
+            
+        </dependency>
+
+        <dependency>
+            <groupId>com.fasterxml.jackson.jaxrs</groupId>
+            <artifactId>jackson-jaxrs-json-provider</artifactId>
+           
+        </dependency>
+        <dependency>
+            <groupId>com.fasterxml.jackson.core</groupId>
+            <artifactId>jackson-databind</artifactId>
+         
+        </dependency>
+        <dependency>
+            <groupId>com.fasterxml.jackson.core</groupId>
+            <artifactId>jackson-annotations</artifactId>
+           
+        </dependency>
+        <dependency>
+            <groupId>com.fasterxml.jackson.core</groupId>
+            <artifactId>jackson-core</artifactId>
+            
+        </dependency>
+
+        <dependency>
+            <groupId>org.apache.cxf</groupId>
+            <artifactId>cxf-rt-transports-http</artifactId>
+           
+        </dependency>
+        <dependency>
+            <groupId>org.apache.cxf</groupId>
+            <artifactId>cxf-rt-frontend-jaxrs</artifactId>
+            
+        </dependency>
+        
+         <!-- swagger -->
+	    <dependency>
+	      <groupId>io.swagger</groupId>
+	      <artifactId>swagger-jaxrs</artifactId>
+	      <exclusions>
+	        <exclusion>
+	          <artifactId>jsr311-api</artifactId>
+	          <groupId>javax.ws.rs</groupId>
+	        </exclusion>
+	      </exclusions>
+	      <optional>true</optional>
+	    </dependency>
+	    <dependency>
+	      <groupId>org.apache.cxf</groupId>
+	      <artifactId>cxf-rt-rs-service-description-swagger</artifactId>
+	    </dependency>
+	    
+	    <dependency>
+		    <groupId>org.webjars</groupId>
+		    <artifactId>swagger-ui</artifactId>	
+		    <version>3.34.0</version>	   
+		</dependency>
+	    
+        <!-- logging -->
+        <dependency>
+            <groupId>org.slf4j</groupId>
+            <artifactId>slf4j-api</artifactId>
+           
+        </dependency>
+        <dependency>
+            <groupId>org.slf4j</groupId>
+            <artifactId>slf4j-log4j12</artifactId>
+            
+        </dependency>
+        <dependency>
+            <groupId>log4j</groupId>
+            <artifactId>log4j</artifactId>
+           
+        </dependency>
+
+        <dependency>
+            <groupId>org.apache.camel</groupId>
+            <artifactId>camel-test</artifactId>
+           
+            <scope>test</scope>
+        </dependency>
+        <dependency>
+            <groupId>org.apache.camel</groupId>
+            <artifactId>camel-test-blueprint</artifactId>
+           
+            <scope>test</scope>
+        </dependency>
+        <dependency>
+            <groupId>org.apache.httpcomponents</groupId>
+            <artifactId>httpcore</artifactId>
+           
+            <scope>test</scope>
+        </dependency>
+        <dependency>
+            <groupId>org.apache.httpcomponents</groupId>
+            <artifactId>httpclient</artifactId>
+           
+            <scope>test</scope>
+        </dependency>
+    </dependencies>
+
+    <build>
+        <defaultGoal>install</defaultGoal>
+
+	    <resources>		  
+		    <resource>
+		        <directory>src/main/resources</directory>
+		        <filtering>true</filtering>
+		    </resource>	
+		    <!-- then disable it for specific resources -->
+		    <resource>
+		        <directory>src/main/resources</directory>
+		        <includes>
+		            <include>**/blueprint.xml</include>
+		        </includes>
+		        <filtering>false</filtering>
+		    </resource>
+		</resources>
+	    
+        <plugins>
+            <plugin>
+                <groupId>org.apache.maven.plugins</groupId>
+                <artifactId>maven-resources-plugin</artifactId>
+                <version>${version.maven-bundle-plugin}</version>
+                <configuration>
+                   <instructions>
+                      <Import-Package>*</Import-Package>
+                   </instructions>
+                </configuration>
+            </plugin>
+
+            <!-- to generate the MANIFEST-FILE of the bundle -->
+           
+            <plugin>
+				<groupId>org.apache.felix</groupId>
+				<artifactId>maven-bundle-plugin</artifactId>
+				<version>${version.maven-bundle-plugin}</version>
+				<extensions>true</extensions>
+				<!--
+				<configuration>
+					<instructions>						
+						<Bundle-SymbolicName>process-core-catalogue</Bundle-SymbolicName>
+						<Bundle-Name>process-core-catalogue</Bundle-Name>
+					</instructions>
+				</configuration>
+				-->
+			</plugin>
+
+            <!-- to run the example using mvn camel:run -->
+            <plugin>
+                <groupId>org.apache.camel</groupId>
+                <artifactId>camel-maven-plugin</artifactId>
+                <version>${version.maven-bundle-plugin}</version>             
+                <configuration>
+                    <useBlueprint>true</useBlueprint>
+                </configuration>
+            </plugin>
+            
+            <plugin>
+	        <groupId>org.codehaus.mojo</groupId>
+	        <artifactId>build-helper-maven-plugin</artifactId>
+	        <version>${build-helper-maven-plugin-version}</version>
+	        <executions>
+	          <execution>
+	            <id>attach-artifacts</id>
+	            <phase>package</phase>
+	            <goals>
+	              <goal>attach-artifact</goal>
+	            </goals>
+	            <configuration>
+	              <artifacts>
+	                <artifact>
+	                  <file>target/classes/features.xml</file>
+	                  <type>xml</type>
+	                  <classifier>features</classifier>
+	                </artifact>
+	              </artifacts>
+	            </configuration>
+	          </execution>
+	        </executions>
+	      </plugin>
+	      
+        </plugins>
+    </build>
+
+</project>
