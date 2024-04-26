@@ -1,5 +1,8 @@
 package com.compartamos.camell;
 
+import io.quarkus.runtime.annotations.RegisterForReflection;
+
+@RegisterForReflection
 public class Language {
     
     private int id;
